@@ -13,6 +13,9 @@ class OpenWeatherMap
     protected $version;
     protected $countryCode;
 
+    /**
+     * @author Denys Troshuk
+     */
     public function __construct()
     {
         $this->version = config('openweathermap.version');
@@ -29,14 +32,30 @@ class OpenWeatherMap
         ]);
     }
 
-    public function getByZipCode($zipCode, $countryCode = null)
+    /**
+     * [getByZipCode returns current weather by zip code]
+     * @param  string|integer       $zipCode
+     * @param  string|null          $countryCode    us,ua,ru...
+     * @return object                               full response from API
+     * @author Denys Troshuk
+     */
+    public function getByZipCode(string $zipCode,  ? string $countryCode = null)
     {
         $countryCode = $countryCode ?? $this->countryCode;
+        $zipCode = str_pad($zipCode, 5, "0", STR_PAD_LEFT);
 
         return $this->api('weather', ['zip' => "$zipCode,$countryCode"]);
     }
 
-    public function getByCityAndState($city, $state = null, $countryCode = null)
+    /**
+     * [getByCityAndState returns current weather by city and state]
+     * @param  string      $city            Sarasota
+     * @param  string      $state           FL...
+     * @param  string|null $countryCode     us,ua,ru...
+     * @return object                       full response from API
+     * @author Denys Troshuk
+     */
+    public function getByCityAndState(string $city, string $state,  ? string $countryCode = null)
     {
         $countryCode = $countryCode ?? $this->countryCode;
         return $this->api('weather', ['q' => "$city,$state,$countryCode"]);

@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
@@ -40,9 +41,16 @@ class Handler extends ExceptionHandler
          * renderable function will catch all Throwable errors
          * and return them in response by making response as error
          * with status code in HTTP standard
+         *
+         * This is a dynmic form of making the errors returns always in the same structure
+         *
+         * @param \Throwable $exception
+         * @param Request $request
+         *
+         * @return response in JSON
+         * @author Denys Troshuk
          */
-        $this->renderable(function (\Throwable $exception, $request) {
-
+        $this->renderable(function (\Throwable $exception, Request $request) {
             switch (get_class($exception)) {
                 case ValidationException::class:
                     $status_code = $exception->status;

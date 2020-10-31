@@ -31,7 +31,7 @@ trait ModelTrait
     /**
      * Make custom error on fail
      * @param  mixed $arguments
-     * @return Model
+     * @return \App\Models\Model
      * @author Denys Troshuk
      */
     public static function findOrFail(...$arguments): self
@@ -42,7 +42,7 @@ trait ModelTrait
     /**
      * Make custom error on fail
      * @param  mixed $arguments
-     * @return Model
+     * @return \App\Models\Model
      * @author Denys Troshuk
      */
     public static function firstOrFail(...$arguments): self
